@@ -34,4 +34,7 @@ new StaleWhileRevalidate({
     new CacheableResponsePlugin({
       statuses: [0, 200],
     }),
-}));
+    ],
+   }
+  )
+);
