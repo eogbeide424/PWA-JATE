@@ -1,142 +1,80 @@
-# 19 Progressive Web Applications (PWA): Text Editor
 
-## Your Task
 
-As you have progressed through this course, you have put together a number of impressive projects that you can show off to potential employers. This project is no exception; in fact, it features some of the most impressive expressions of the concepts you have learned so far.
 
-Your task is to build a text editor that runs in the browser. The app will be a single-page application that meets the PWA criteria. Additionally, it will feature a number of data persistence techniques that serve as redundancy in case one of the options is not supported by the browser. The application will also function offline.
+# PWA-JATE
+|HTML,Javascript  |[Git Hub Repo](https://github.com/eogbeide424/PWA-JATE|) 
+|Deployed App Link | |[Deployed App](https://frozen-reef-29437.herokuapp.com/)
 
-To build this text editor, you will start with an existing application and implement methods for getting and storing data to an IndexedDB database. You will use a package called `idb`, which is a lightweight wrapper around the IndexedDB API. It features a number of methods that are useful for storing and retrieving data, and is used by companies like Google and Mozilla.
+## Description
 
-You will deploy this full-stack application to Heroku using the [Heroku Deployment Guide on The Full-Stack Blog](https://coding-boot-camp.github.io/full-stack/heroku/heroku-deployment-guide).
+ On this project we had to add to the code given and make sure that when we enter npm start at the root directory 1. the server starts 2. the JavaScript files gets bundled using webpack 3. make sure that IndexDb immeadiately creates a database storage  4. when  you click off the dom  window that the data has been saved  5. then when you click the install button that the application saves  onto your desktop . At first  it was confusing seperating the client from the server and making sure that build run smoothly without error what I came to find out is thtat the package.json had a lot to do with it . If the root package.json dosen't have the correct scripts(refer to the snippet below) then it would not build run or anything it'll just give you an error message.
+ ````javascript
+ "scripts": {
+    "start:dev": "concurrently \"cd server && npm run server\" \"cd client && npm run dev\"",
+    "start": "npm run build && cd server && node server.js",
+    "server": "cd server nodemon server.js --ignore client",
+    "build": "cd client && npm run build",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "client": "cd client && npm start"
+  },
+  ````
+Another thing to note was how idb used the built in methods of openDb to handle request similar to how an API server does with a put request to update and a get request to retrieve, I didn't have to utillize it in this particular project but you can even do a Delete and post request 
+````javaScript
+export const getDb = async () =>{
+console.error('getDb not implemented');
+const jateDb = await openDB('JATE', 1);
+const tx = jateDb.transaction('jate', 'readwrite');
+const store = tx.objectStore('jate');
+const request = store.get('id');
+const result = await request;
+console.log(result);
+}
+````
+Learning how to do this manually makes me appreciate the fact that React does all this under the hood for you 
 
-## User Story
+## Table of Contents 
 
-```md
-AS A developer
-I WANT to create notes or code snippets with or without an internet connection
-SO THAT I can reliably retrieve them for later use
-```
+* [Installation](#installation)
+* [Usage](#usage)
+* [Credits](#credits)
+* [License](#license)
 
-## Acceptance Criteria
 
-```md
-GIVEN a text editor web application
-WHEN I open my application in my editor
-THEN I should see a client server folder structure
-WHEN I run `npm run start` from the root directory
-THEN I find that my application should start up the backend and serve the client
-WHEN I run the text editor application from my terminal
-THEN I find that my JavaScript files have been bundled using webpack
-WHEN I run my webpack plugins
-THEN I find that I have a generated HTML file, service worker, and a manifest file
-WHEN I use next-gen JavaScript in my application
-THEN I find that the text editor still functions in the browser without errors
-WHEN I open the text editor
-THEN I find that IndexedDB has immediately created a database storage
-WHEN I enter content and subsequently click off of the DOM window
-THEN I find that the content in the text editor has been saved with IndexedDB
-WHEN I reopen the text editor after closing it
-THEN I find that the content in the text editor has been retrieved from our IndexedDB
-WHEN I click on the Install button
-THEN I download my web application as an icon on my desktop
-WHEN I load my web application
-THEN I should have a registered service worker using workbox
-WHEN I register a service worker
-THEN I should have my static assets pre cached upon loading along with subsequent pages and static assets
-WHEN I deploy to Heroku
-THEN I should have proper build scripts for a webpack application
-```
+## Installation
 
-## Mock-Up
+When open the app open the terminal from the root folder and run a npm start
 
-The following animation demonstrates the application functionality:
 
-![Demonstration of the finished Module 19 Challenge being used in the browser and then installed.](./Assets/00-demo.gif)
+## Usage 
 
-The following image shows the application's `manifest.json` file:
+It's basically just another text editor you can save code snippets or use it to write notes and to have it function off line just install the app on your device 
 
-![Demonstration of the finished Module 19 Challenge with a manifest file in the browser.](./Assets/01-manifest.png)
 
-The following image shows the application's registered service worker:
 
-![Demonstration of the finished Module 19 Challenge with a registered service worker in the browser.](./Assets/02-service-worker.png)
+## Credits
 
-The following image shows the application's IndexedDB storage:
+Eugene Ogbeide eogbeide2@gmail.som
 
-![Demonstration of the finished Module 19 Challenge with a IndexedDB storage named 'jate' in the browser.](./Assets/03-idb-storage.png)
+## License
 
-## Grading Requirements
+MIT
 
-> **Note**: If a Challenge assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
->
-> * A repository that has no code
->
-> * A repository that includes a unique name but nothing else
->
-> * A repository that includes only a README file but nothing else
->
-> * A repository that only includes starter code
+'https://choosealicense.com/licenses/MIT/
 
-This Challenge is graded based on the following criteria:
+undefined
 
-### Technical Acceptance Criteria: 40%
 
-* Satisfies all of the above acceptance criteria plus the following:
 
-  * Uses IndexedDB to create an object store and includes both GET and PUT methods
+---
 
-  * The application works without an internet connection
+🏆 The sections listed above are the minimum for a good README, but your project will ultimately determine the content of this document. You might also want to consider adding the following sections.
 
-  * Automatically saves content inside the text editor when the DOM window is unfocused
+## Badges
 
-  * Bundled with webpack
 
-  * Create a service worker with workbox that Caches static assets
+https://img.shields.io/badge/license-MIT-red
 
-  * The application should use babel in order to use async / await
+## Questions
+If any questions on how to use the app you can email me at eogbeide2@gmail.som
 
-  * Application must have a generated `manifest.json` using the `WebpackPwaManifest` plug-in
-
-  * Can be installed as a Progressive Web Application
-
-### Deployment: 32%
-
-* Application deployed to Heroku at live URL with build scripts
-
-* Application loads with no errors
-
-* Application GitHub URL submitted
-
-* GitHub repo contains application code
-
-### Application Quality: 15%
-
-* Application user experience is intuitive and easy to navigate
-
-* Application user interface style is clean and polished
-
-* Application resembles the mock-up functionality provided in the Challenge instructions
-
-### Repository Quality: 13%
-
-* Repository has a unique name
-
-* Repository follows best practices for file structure and naming conventions
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages
-
-* Repository contains quality README file with description, screenshot, and link to deployed application
-
-## Review
-
-You are required to submit the following for review:
-
-* The URL of the deployed application
-
-* The URL of the GitHub repository, with a unique name and a README describing the project
-
-- - -
 © 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
